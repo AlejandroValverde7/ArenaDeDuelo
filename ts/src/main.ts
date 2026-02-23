@@ -1,8 +1,9 @@
+    // Importaciones
     import { Guerrero } from "./personajes/Guerrero.js";
     import { Mago } from "./personajes/Mago.js";
     import { Personaje } from "./personajes/Personaje.js";
 
-    // DOM
+    // Conexiones del DOM
     const form = document.getElementById("form-personaje") as HTMLFormElement;
     const contenedor = document.getElementById("personajes") as HTMLDivElement;
     const logDiv = document.getElementById("log-texto") as HTMLDivElement;
@@ -18,20 +19,28 @@
     let musicaIniciada = false;
 
 
-    // Log
-    function log(mensaje: string, clase: string = "") {
+    /**
+     * Funcion para mostrar los logs en el registro de batalla
+     * @param mensaje Mensaje que se quiere mostrar en el registro
+     * @param clase clase que se quiere añadir al log para decorar
+     */
+    function log(mensaje: string, clase: string = ""):void {
         const p = document.createElement("p");
         p.textContent = mensaje;
 
         if (clase) p.classList.add(clase);
 
         logDiv.appendChild(p);
-        logDiv.scrollTop = logDiv.scrollHeight;
     }
 
 
-    // Crear tarjeta
-    function crearTarjeta(personaje: Personaje) {
+    /**
+     * Añade una tarjeta de combate al DOM, ademas
+     * actualiza los botones de ataque
+     * @param personaje 
+     * @returns Devuelve el div
+     */
+    function crearTarjeta(personaje: Personaje):HTMLDivElement {
         const div = document.createElement("div");
         div.classList.add("tarjeta");
 
@@ -54,17 +63,19 @@
         return div;
     }
 
-
+    /**
+     * Funcion para actualizar los botones de ataque
+     */
     function actualizarBotonesDeAtaque() {
         const tarjetas = contenedor.querySelectorAll(".tarjeta");
 
         tarjetas.forEach((tarjeta, i) => {
             const contenedorAtaques = tarjeta.querySelector(".ataques") as HTMLDivElement;
-            contenedorAtaques.innerHTML = ""; // limpiar botones
+            contenedorAtaques.innerHTML = ""; // limpiar botones actuales
 
             personajes.forEach((objetivo, j) => {
-                if (i === j) return; // no puede atacarse a sí mismo
-                if (!objetivo.estaVivo()) return; // no atacar muertos
+                if (i === j) return; // para que no se ataque a si mismo
+                if (!objetivo.estaVivo()) return; // para no atacar a los muertos
 
                 const btn = document.createElement("button");
                 btn.textContent = `Atacar a ${objetivo.nombre}`;
@@ -81,19 +92,21 @@
         actualizarTurnos();
     }
 
-    function realizarAtaque(atacanteIndex: number, objetivoIndex: number) {
+    /**
+     * Funcion que controla los ataques, se les indica el numero del atacante y el objetivo
+     * y puede fallarse o acertarse el ataque
+     * @param atacanteIndex index del array que indica al atacante
+     * @param objetivoIndex index del array que indica al que atacan
+     */
+    function realizarAtaque(atacanteIndex: number, objetivoIndex: number):void {
         const atacante = personajes[atacanteIndex];
         const objetivo = personajes[objetivoIndex];
 
         const daño = atacante.atacar(objetivo);
         const esHechizo = atacante instanceof Mago;
 
+        // Animación para indicar quien toca atacar
         animarAtaque(atacanteIndex, esHechizo);
-        // Animación de temblor en el objetivo
-        const tarjetaObjetivo = contenedor.querySelectorAll(".tarjeta")[objetivoIndex];
-        tarjetaObjetivo.classList.add("hit");
-        setTimeout(() => tarjetaObjetivo.classList.remove("hit"), 300);
-
 
         if (daño === 0) {
             log(`${atacante.nombre} falló el ataque contra ${objetivo.nombre}.`, "log-fallo");
@@ -118,15 +131,21 @@
         actualizarBotonesDeAtaque();
     }
 
-    function avanzarTurno() {
+    /**
+     * Funcion para el cambio de turnos
+     */
+    function avanzarTurno():void {
         do {
             turno = (turno + 1) % personajes.length;
         } while (!personajes[turno].estaVivo());
     }
 
 
-    // Actualizar tarjetas
-    function actualizarTarjetas() {
+    /**
+     * Funcion para actualizar las tarjetas viendo si el personaje
+     * esta vivo,muerto, y los cambios en las barras de vida y mana
+     */
+    function actualizarTarjetas() :void {
         const tarjetas = contenedor.querySelectorAll(".tarjeta");
 
         tarjetas.forEach((tarjeta, i) => {
@@ -152,7 +171,9 @@
         });
     }
 
-    // Turnos
+    /**
+     * Funcion para actualizar los turnos
+     */
     function actualizarTurnos() {
         const tarjetas = contenedor.querySelectorAll(".tarjeta");
 
@@ -160,7 +181,7 @@
             const personaje = personajes[index];
             const botones = tarjeta.querySelectorAll(".btn-atacar");
 
-            const esSuTurno = index === turno;
+            const esSuTurno = index === turno; //Si el indice es igual al turno es su turno
             const estaVivo = personaje.estaVivo();
             const puedeAtacar = esSuTurno && estaVivo;
 
@@ -168,15 +189,10 @@
                 (btn as HTMLButtonElement).disabled = !puedeAtacar;
             });
 
-            // Indicador visual del turno (llamas)
+            // toggle añade el classlist si esSuTurno es true si no lo quita
             tarjeta.classList.toggle("turno", esSuTurno);
         });
     }
-
-
-
-
-
 
     // Formulario
     form.addEventListener("submit", (e) => {
@@ -203,7 +219,7 @@
         if (!musicaIniciada) {
             musicaIniciada = true;
             musica.volume = 0.1; //Damos valor para no reventar los oidos
-            musica.muted = false; // activar sonido
+            musica.muted = false; // activamos el sonido
             musica.play().catch(() => {
                 console.log("El navegador requiere interacción del usuario para reproducir audio.");
             });
@@ -213,7 +229,9 @@
         actualizarTurnos();
     });
 
-    // Mostrar campos dinámicos
+    /**
+     * Se muestran las variantes para crear un guerrero o un mago segun el campo elegido
+     */
     selectClase.addEventListener("change", () => {
         if (selectClase.value === "Guerrero") {
             campoArmadura.style.display = "block";
@@ -229,7 +247,13 @@
     campoMana.style.display = "none";
 
 
-    function animarAtaque(index: number, esHechizo: boolean) {
+    /**
+     * Funcion para añadir una animacion al pulsar el boton de ataque, se muestra
+     * segun sea un hechizo o no un sonido y una imagen
+     * @param index lugar en el que se realiza la animacion
+     * @param esHechizo si es hechizo o no para la animacion
+     */
+    function animarAtaque(index: number, esHechizo: boolean) : void {
         const tarjeta = contenedor.querySelectorAll(".tarjeta")[index];
 
         const img = document.createElement("img");

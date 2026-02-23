@@ -191,6 +191,8 @@ input:focus, select:focus {
     cursor: not-allowed;
 }
 
+/* ======== ANIMACION DE ATAQUES ======== */
+
 .anim-ataque {
     position: absolute;
     width: 80px;
@@ -218,6 +220,8 @@ input:focus, select:focus {
     position: relative; /* necesario para posicionar la animación */
 }
 
+/* ======== ANIMACION DE AGITAR A QUIEN ATACAS ======== */
+
 @keyframes shake {
     0% { transform: translateX(0); }
     20% { transform: translateX(-8px); }
@@ -232,9 +236,7 @@ input:focus, select:focus {
     z-index: 5; /* por encima del fuego */
 }
 
-
-
-/* Efecto de llamas alrededor de la tarjeta del turno */
+/* ======== eFECTO DE LLAMAS PARA EL QUE TIENE EL TURNO ======== */
 .tarjeta.turno {
     position: relative;
     border: 3px solid rgba(255, 80, 0, 0.9);
@@ -264,6 +266,8 @@ input:focus, select:focus {
             0 0 60px rgba(255, 150, 0, 0.5);
     }
 }
+
+/* ======== BARRA DE MANA PARA DISTINTOS NAVEGADORES ======== */
 
 .mana-bar {
     width: 100%;
