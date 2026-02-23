@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Arena de Duelos</title>
+    <script type="module" src="../js/src/main.js"></script>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body>
-    
+
+    <h1>Arena de Duelos</h1>
+    <audio id="musica-fondo" src="../resources/audio/videoplayback.mp3" loop muted></audio>
+
+    <section id="creacion">
+        <h2>Crear Personaje</h2>
+
+        <form id="form-personaje">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+
+            <input type="number" id="fuerza" min="1" max="10" placeholder="Fuerza (1-10)" required>
+
+            <select id="clase">
+                <option value="Guerrero">Guerrero</option>
+                <option value="Mago">Mago</option>
+            </select>
+
+            <div id="campo-armadura" class="campo-extra">
+                <input type="number" id="armadura" min="0" max="10" placeholder="Armadura (0-10)">
+            </div>
+
+            <div id="campo-mana" class="campo-extra">
+                <input type="number" id="mana" min="0" max="5" placeholder="Maná inicial (0-5)">
+            </div>
+
+            <button type="submit">Crear</button>
+        </form>
+    </section>
+
+    <section id="arena">
+        <h2>Personajes</h2>
+        <div id="personajes"></div>
+    </section>
+
+    <section id="log">
+        <h2>Registro de Batalla</h2>
+        <div id="log-texto"></div>
+    </section>
+
 </body>
 </html>

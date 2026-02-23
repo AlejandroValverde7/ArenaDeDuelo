@@ -1,0 +1,290 @@
+/* ======== ESTILO GENERAL ======== */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #2c2c44);
+    color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #ffd86b;
+    text-shadow: 0 0 8px rgba(255, 216, 107, 0.6);
+}
+
+/* ======== CONTENEDOR DE PERSONAJES ======== */
+
+#personajes {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* ======== TARJETAS ======== */
+
+.tarjeta {
+    border: 2px solid #6a5acd;
+    padding: 15px;
+    width: 200px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 12px rgba(106, 90, 205, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 18px rgba(106, 90, 205, 0.7);
+}
+
+.tarjeta.muerto {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    border-color: #ff4d4d;
+    box-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
+}
+
+.tarjeta h3 {
+    margin: 0;
+    color: #ffd86b;
+}
+
+/* ======== BARRA DE VIDA ======== */
+
+progress {
+    width: 100%;
+    height: 18px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+progress::-webkit-progress-bar {
+    background: #333;
+}
+
+progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #ff4d4d, #ff9f43);
+}
+
+/* ======== BOTONES ======== */
+
+button {
+    margin-top: 12px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #6a5acd;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: #7b6df0;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ======== LOG DE BATALLA ======== */
+
+#log-texto {
+    background: rgba(0, 0, 0, 0.6);
+    color: #00ff9d;
+    padding: 15px;
+    height: 220px;
+    overflow-y: auto;
+    font-family: "Consolas", monospace;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 255, 157, 0.3);
+    margin-top: 20px;
+}
+
+/* ======== FORMULARIO ======== */
+
+#creacion form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+input, select {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background: #2f2f45;
+    color: #fff;
+    font-size: 14px;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 8px rgba(255, 216, 107, 0.6);
+}
+
+.campo-extra {
+    display: none;
+    margin-top: 10px;
+}
+
+.campo-extra input {
+    width: 150px;
+}
+
+.log-dano {
+    color: #ff6b6b; /* rojo daño */
+    font-weight: bold;
+}
+
+.log-hechizo {
+    color: #6bc5ff; /* azul mágico */
+    font-weight: bold;
+}
+
+.log-muerte {
+    color: #ff3b3b;
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.7);
+    font-weight: bold;
+}
+
+.log-turno {
+    color: #ffe66d; /* amarillo */
+    font-style: italic;
+}
+
+.log-fallo {
+    color: #bbbbbb;
+    font-style: italic;
+    opacity: 0.8;
+}
+.ataques {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ataques button {
+    padding: 6px 10px;
+    background-color: #444;
+    color: white;
+    border: 1px solid #222;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ataques button:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+
+.anim-ataque {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    animation: ataqueAnim 0.6s ease-out forwards;
+}
+
+@keyframes ataqueAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-20px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) translateY(-10px);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-30px);
+    }
+}
+
+.tarjeta {
+    position: relative; /* necesario para posicionar la animación */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-8px); }
+    80% { transform: translateX(8px); }
+    100% { transform: translateX(0); }
+}
+
+.tarjeta.hit {
+    animation: shake 0.35s ease-in-out;
+    z-index: 5; /* por encima del fuego */
+}
+
+
+
+/* Efecto de llamas alrededor de la tarjeta del turno */
+.tarjeta.turno {
+    position: relative;
+    border: 3px solid rgba(255, 80, 0, 0.9);
+    animation: fuego 1s infinite ease-in-out;
+    box-shadow: 0 0 25px rgba(255, 60, 0, 0.9),
+                0 0 45px rgba(255, 120, 0, 0.7);
+    z-index: 1;
+}
+
+@keyframes fuego {
+    0% {
+        box-shadow:
+            0 0 20px rgba(255, 50, 0, 0.9),
+            0 0 40px rgba(255, 100, 0, 0.7),
+            0 0 60px rgba(255, 150, 0, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 30px rgba(255, 80, 0, 1),
+            0 0 55px rgba(255, 140, 0, 0.9),
+            0 0 80px rgba(255, 200, 0, 0.7);
+    }
+    100% {
+        box-shadow:
+            0 0 20px rgba(255, 50, 0, 0.9),
+            0 0 40px rgba(255, 100, 0, 0.7),
+            0 0 60px rgba(255, 150, 0, 0.5);
+    }
+}
+
+.mana-bar {
+    width: 100%;
+    height: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Chrome, Edge, Opera */
+.mana-bar::-webkit-progress-value {
+    background: #3b82f6; /* azul */
+}
+
+.mana-bar::-webkit-progress-bar {
+    background: #1e3a8a55; /* azul oscuro translúcido */
+}
+
+/* Firefox */
+.mana-bar::-moz-progress-bar {
+    background: #3b82f6;
+}
+
+

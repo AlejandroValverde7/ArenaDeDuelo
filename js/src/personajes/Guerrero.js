@@ -1,23 +1,16 @@
 // Guerrero.ts
 import { Personaje } from "./Personaje.js";
-
 export class Guerrero extends Personaje {
-
-    public armadura: number = 3;
-
-    constructor(nombre: string, fuerza: number, armadura: number = 3) {
+    armadura = 3;
+    constructor(nombre, fuerza, armadura = 3) {
         super(nombre, fuerza);
         this.armadura = armadura;
     }
-
     // Sobrescribe recibirDaño
-    public override recibirDano(cantidad: number): void {
+    recibirDano(cantidad) {
         const dañoReducido = Math.max(0, cantidad - this.armadura);
-
-        console.log(
-            `${this.nombre} recibe ${dañoReducido} de daño (armadura redujo ${cantidad - dañoReducido}).`
-        );
-
+        console.log(`${this.nombre} recibe ${dañoReducido} de daño (armadura redujo ${cantidad - dañoReducido}).`);
         super.recibirDano(dañoReducido);
     }
 }
+//# sourceMappingURL=Guerrero.js.map

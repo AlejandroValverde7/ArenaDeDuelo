@@ -3,16 +3,12 @@
     "rootDir": "./ts",
     "outDir": "./js",
 
-    "module": "nodenext",
+    "module": "esnext",
     "target": "esnext",
+    "moduleResolution": "bundler",
 
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-
     "strict": true,
-    "jsx": "react-jsx",
-    "isolatedModules": true,
     "skipLibCheck": true
   },
 
