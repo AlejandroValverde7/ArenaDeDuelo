@@ -287,4 +287,25 @@ input:focus, select:focus {
     background: #3b82f6;
 }
 
+/* ======== GIFS DECORATIVOS ======== */
 
+.gif-decoracion {
+    position: fixed;
+    top: 10px;
+    object-fit: contain;
+    z-index: 0;    
+    pointer-events: none; 
+}
+
+.gif-izq {
+    left: 10px;
+    width: 120px;    
+    transform: scaleX(-1); /*Puesto para que este en modo espejo y se vea mejor*/
+    height: 120px;
+}
+
+.gif-der {
+    right: 10px;
+    width: 140px;    
+    height: 140px;
+}
